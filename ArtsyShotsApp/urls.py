@@ -7,9 +7,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('about/', views.about, name='about'),
     path('starter-page/', views.starter, name='starter-page'),
-    path('', views.index, name='home'),
+    path('home/', views.index, name='home'),
     path('gallery/', views.gallery, name='gallery'),
     path('gallery-single/', views.single, name='gallery-single'),
     path('services/', views.services, name='services'),
     path('contact/', views.contact, name='contact'),
+    path('', views.register, name='register'),
+    path('login/', views.login_view, name='login'),
 ]
