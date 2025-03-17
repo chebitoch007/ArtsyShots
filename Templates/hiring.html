@@ -52,16 +52,16 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html">Home<br></a></li>
-          <li><a href="about.html">About</a></li>
-          <li class="dropdown"><a href="gallery.html"><span>Gallery</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li><a href="{% url 'home' %}">Home<br></a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li class="dropdown"><a href="{% url 'gallery' %}"><span>Gallery</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="gallery.html">Nature</a></li>
-              <li><a href="gallery.html">People</a></li>
-              <li><a href="gallery.html">Architecture</a></li>
-              <li><a href="gallery.html">Animals</a></li>
-              <li><a href="gallery.html">Sports</a></li>
-              <li><a href="gallery.html">Travel</a></li>
+              <li><a href="{% url 'gallery' %}">Nature</a></li>
+              <li><a href="{% url 'gallery' %}">People</a></li>
+              <li><a href="{% url 'gallery' %}">Architecture</a></li>
+              <li><a href="{% url 'gallery' %}">Animals</a></li>
+              <li><a href="{% url 'gallery' %}">Sports</a></li>
+              <li><a href="{% url 'gallery' %}">Travel</a></li>
               <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                 <ul>
                   <li><a href="#">Deep Dropdown 1</a></li>
@@ -73,7 +73,7 @@
               </li>
             </ul>
           </li>
-          <li><a href="services.html">Services</a></li>
+          <li><a href="{% url 'services' %}">Services</a></li>
           <li><a href="{% url 'hiring' %}" class="active">Book a photo session</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -98,7 +98,7 @@
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
               <h1>Book a photo session</h1>
-              <p class="mb-0">Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p>
+              <p class="mb-0">Have a project in mind or need stunning visuals? We’d love to hear from you! Reach out to ArtsyShots for bookings, collaborations, or inquiries. Let’s create something amazing together!</p>
             </div>
           </div>
         </div>
@@ -126,7 +126,7 @@
                 <i class="bi bi-geo-alt flex-shrink-0"></i>
                 <div>
                   <h3>Location</h3>
-                  <p>A108 Adam Street, New York, NY 535022</p>
+                  <p>kipro center, third floor, Westlands</p>
                 </div>
               </div>
             </div><!-- End Info Item -->
@@ -136,7 +136,7 @@
                 <i class="bi bi-telephone flex-shrink-0"></i>
                 <div>
                   <h3>Call</h3>
-                  <p>+1 5589 55488 55</p>
+                  <p>+254 756 455 344</p>
                 </div>
               </div>
             </div><!-- End Info Item -->
@@ -146,7 +146,7 @@
                 <i class="bi bi-envelope flex-shrink-0"></i>
                 <div>
                   <h3>Email</h3>
-                  <p>info@example.com</p>
+                  <p>hack@gmail.com</p>
                 </div>
               </div>
             </div><!-- End Info Item -->
@@ -154,23 +154,24 @@
           </div>
         </div>
 
-        <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="300">
+        <form method="post" >
+            {% csrf_token %}
           <div class="row gy-4">
 
             <div class="col-md-6">
-              <input type="text" name="name" class="form-control" placeholder="Your Name" required=required>
+              <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
             </div>
 
             <div class="col-md-6 ">
-              <input type="email" class="form-control" name="email" placeholder="Your Email" required=required>
+              <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
             </div>
 
             <div class="col-md-12">
-              <input type="text" class="form-control" name="subject" placeholder="Subject" required=required>
+              <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
             </div>
 
             <div class="col-md-12">
-              <textarea class="form-control" name="message" rows="6" placeholder="Message" required=required></textarea>
+              <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
             </div>
 
             <div class="col-md-12 text-center">

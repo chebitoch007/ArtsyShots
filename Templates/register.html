@@ -6,56 +6,96 @@
     <title>Sliding Login & Registration</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/register.css' %}">
-
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .container {
+            width: 400px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container {
+            display: flex;
+            width: 200%;
+            transition: transform 0.5s ease-in-out;
+        }
+        form {
+            width: 50%;
+            padding: 30px;
+            flex-shrink: 0;
+        }
+        .toggle-btn {
+            border: none;
+            background: none;
+            color: #007bff;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <div class="container p-3">
+    <div class="container">
         <div class="form-container" id="slider">
-            <form class="form-box" id="register-box" method="post">
+            <!-- Register Form -->
+            <form id="register-box" method="post" action="{% url 'register' %}?next={% url 'home' %}">
                 {% csrf_token %}
-                <h2>Register</h2>
-                <input type="text" name="username" class="form-control" placeholder="Username" required="required">
-                <input type="email" name="email" class="form-control" placeholder="Email" required="required">
-                <input type="password" name="password" id="password" class="form-control" placeholder="Password" required="required">
-                <input type="password" name="confirm_password" id="confirm-password" class="form-control" placeholder="Confirm Password" required="required">
-                <button type="button" class="btn btn-primary" onclick="validatePassword()">Register</button>
-                <p>Already have an account? <button type="button" class="toggle-btn" onclick="toggleForm()">Login</button></p>
-                <p id="error-message">Passwords do not match!</p>
+                <h2 class="text-center">Register</h2>
+                <input type="text" name="username" class="form-control mb-2" placeholder="Username" required>
+                <input type="email" name="email" class="form-control mb-2" placeholder="Email" required>
+                <input type="password" name="password1" class="form-control mb-2" placeholder="Password" required>
+                <input type="password" name="password2" class="form-control mb-2" placeholder="Confirm Password" required>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="text-danger">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+                <p class="text-center mt-2">Already have an account? <button type="button" class="toggle-btn" onclick="toggleForm(false)">Login</button></p>
             </form>
-            <form class="form-box" id="login-box" method="post">
+
+            <!-- Login Form -->
+            <form id="login-box" method="post" action="{% url 'login' %}?next={% url 'home' %}">
                 {% csrf_token %}
-                <h2>Login</h2>
-                <input type="text" name="password" class="form-control" placeholder="Username" required="required">
-                <input type="password" name="password" class="form-control" placeholder="Password" required="required">
-                <button type="submit" class="btn btn-primary">Login</button>
-                <p>Don't have an account? <button type="button" class="toggle-btn" onclick="toggleForm()">Register</button></p>
+                <h2 class="text-center">Login</h2>
+                <input type="text" name="username" class="form-control mb-2" placeholder="Username" required>
+                <input type="password" name="password" class="form-control mb-2" placeholder="Password" required>
+
+                <label>
+                    <input type="checkbox" name="remember_me"> Remember Me
+                </label>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="text-danger">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <p class="text-center mt-2"><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
+                <p class="text-center">Don't have an account? <button type="button" class="toggle-btn" onclick="toggleForm(true)">Register</button></p>
             </form>
         </div>
     </div>
 
     <script>
-        let isLogin = false;
-        function toggleForm() {
-            const slider = document.getElementById('slider');
-            isLogin = !isLogin;
-            slider.style.transform = isLogin ? 'translateX(-50%)' : 'translateX(0)';
-        }
-
-        function validatePassword() {
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-            const errorMessage = document.getElementById('error-message');
-
-            if (password !== confirmPassword) {
-                errorMessage.style.display = 'block';
-            } else {
-                errorMessage.style.display = 'none';
-                alert("Registration successful!");
-            }
+        let isRegisterActive = true;
+        function toggleForm(showRegister) {
+            isRegisterActive = showRegister;
+            document.getElementById('slider').style.transform = isRegisterActive ? 'translateX(0%)' : 'translateX(-50%)';
         }
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
